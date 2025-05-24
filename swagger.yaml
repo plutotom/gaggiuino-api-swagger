@@ -10,14 +10,21 @@ paths:
     post:
       summary: Log Espresso Shot
       responses:
-        "200":
+        '200':
           description: Shot logged successfully
   /api/shots/latest:
     get:
       summary: Get Latest Shot
       responses:
-        "200":
+        '200':
           description: Returns the latest shot identifier
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lastShotId:
+                    type: string
   /api/shots/{id}:
     get:
       summary: Get Shot Data
@@ -29,13 +36,120 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Returns shot data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  attachments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        timestamp:
+                          type: integer
+                        datapoints:
+                          type: object
+                          properties:
+                            targetTemperature:
+                              type: array
+                              items:
+                                type: integer
+                            weightFlow:
+                              type: array
+                              items:
+                                type: integer
+                            targetPressure:
+                              type: array
+                              items:
+                                type: integer
+                            pressure:
+                              type: array
+                              items:
+                                type: integer
+                            pumpFlow:
+                              type: array
+                              items:
+                                type: integer
+                            temperature:
+                              type: array
+                              items:
+                                type: integer
+                            shotWeight:
+                              type: array
+                              items:
+                                type: integer
+                            waterPumped:
+                              type: array
+                              items:
+                                type: integer
+                            timeInShot:
+                              type: array
+                              items:
+                                type: integer
+                        profile:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            waterTemperature:
+                              type: integer
+                            recipe:
+                              type: object
+                              properties:
+                                coffeeIn:
+                                  type: integer
+                                ratio:
+                                  type: integer
+                            name:
+                              type: string
+                            phases:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  restriction:
+                                    type: integer
+                                  stopConditions:
+                                    type: object
+                                    properties:
+                                      waterPumpedInPhase:
+                                        type: integer
+                                      time:
+                                        type: integer
+                                      pressureAbove:
+                                        type: number
+                                      pressureBelow:
+                                        type: number
+                                  type:
+                                    type: string
+                                  target:
+                                    type: object
+                                    properties:
+                                      end:
+                                        type: integer
+                                      curve:
+                                        type: string
+                                      time:
+                                        type: integer
+                                  skip:
+                                    type: boolean
+                            globalStopConditions:
+                              type: object
+                              properties:
+                                weight:
+                                  type: integer
+                        duration:
+                          type: integer
   /api/profiles/all:
     get:
       summary: Get All Profiles
       responses:
-        "200":
+        '200':
           description: Returns all available profiles
   /api/profile-select/{profileId}:
     post:
@@ -48,7 +162,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Profile selected successfully
     delete:
       summary: Delete Profile
@@ -60,11 +174,36 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Profile deleted successfully
   /api/system/status:
     get:
       summary: Get System Status
       responses:
-        "200":
+        '200':
           description: Returns system status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  upTime:
+                    type: string
+                  profileId:
+                    type: string
+                  profileName:
+                    type: string
+                  targetTemperature:
+                    type: string
+                  temperature:
+                    type: string
+                  pressure:
+                    type: string
+                  waterLevel:
+                    type: string
+                  weight:
+                    type: string
+                  brewSwitchState:
+                    type: string
+                  steamSwitchState:
+                    type: string
